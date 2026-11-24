@@ -33,7 +33,7 @@ if [[ ! -f "$SYSUP_CONFIG" ]]; then
 fi
 
 # A newer config format could be silently misread, so refuse it.
-conf_ver="$(sed -n 's/^# config-version:[[:space:]]*\([0-9]\{1,\}\).*/\1/p' "$SYSUP_CONFIG" | head -n1)"
+conf_ver="$(awk -F':[[:space:]]*' '/^# config-version:/ {print $2; exit}' "$SYSUP_CONFIG")"
 if [[ -z "$conf_ver" ]]; then
     warn "plugin.conf has no version: assuming format $SYSUP_CONFIG_VERSION."
 elif (( conf_ver > SYSUP_CONFIG_VERSION )); then

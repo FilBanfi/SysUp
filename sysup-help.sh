@@ -53,7 +53,7 @@ ${C_YELLOW}CONFIG FILE${C_RESET}
 ${C_YELLOW}AVAILABLE MODULES${C_RESET}
   Use the name without .sh, e.g. sysup-install dnf
   
-  Modules my vary from this list. Please always refere to the official list on GitHub.
+  Modules may vary from this list. Please always refer to the official list on GitHub.
   
   Arch          pacman  yay  paru
   Debian        apt
