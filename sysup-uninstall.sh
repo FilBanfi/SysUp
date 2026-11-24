@@ -1,8 +1,5 @@
 #!/usr/bin/env bash
-# =============================================================================
-# sysup-uninstall.sh — rimuove il tool, i comandi e le righe aggiunte al PATH.
-# Idempotente: lanciarlo due volte non produce errori.
-# =============================================================================
+# Removes the tool, its commands and the PATH lines it added.
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -18,44 +15,43 @@ printf '%s\n' "======================================${C_RESET}"
 echo ""
 
 if (( ASSUME_YES == 0 )); then
-    if [[ ! -t 0 ]]; then err "Nessun terminale: usa 'sysup-uninstall -y'."; exit 1; fi
-    warn "Rimuovo $SYSUP_INSTALL_DIR (moduli e plugin.conf inclusi)."
-    read -rp "Continuare? [y/N]: " ans
-    case "$ans" in y|Y|yes|YES) ;; *) echo "Annullato."; exit 0 ;; esac
+    if [[ ! -t 0 ]]; then err "No interactive terminal: use 'sysup-uninstall -y'."; exit 1; fi
+    warn "This removes $SYSUP_INSTALL_DIR (modules and plugin.conf included)."
+    read -rp "Continue? [y/N]: " ans
+    case "$ans" in y|Y|yes|YES) ;; *) echo "Aborted."; exit 0 ;; esac
 fi
 
-# ===== COMANDI =====
-# -f: se il file non c'è, nessun errore (idempotenza).
-info "Rimuovo i comandi..."
+# ===== COMMANDS =====
+info "Removing commands..."
 for cmd in sysup sysup-install sysup-remove sysup-uninstall; do
     rm -f "$SYSUP_BIN_DIR/$cmd"
 done
-ok "Comandi rimossi."
+ok "Commands removed."
 
-# ===== PULIZIA RC =====
-# Rimozione per marcatore: niente regex fragili su $PATH.
-info "Pulisco .bashrc / .zshrc..."
+# ===== SHELL RC =====
+# Removal by marker: no fragile regex matching against $PATH.
+info "Cleaning .bashrc / .zshrc..."
 for rc in "$HOME/.bashrc" "$HOME/.zshrc"; do
     if [[ -f "$rc" ]] && grep -Fq 'sysup' "$rc"; then
         sed_i '/# sysup-path/d' "$rc"
         sed_i '/# Added by sysup installer/d' "$rc"
-        ok "Pulito $(basename "$rc")"
+        ok "Cleaned $(basename "$rc")"
     fi
 done
 
 # ===== DIRECTORY =====
-# Guardia: cancelliamo solo se il percorso finisce davvero con /sysup.
+# Guard before rm -rf: only delete a path that really ends in /sysup.
 if [[ -n "$SYSUP_INSTALL_DIR" && "$SYSUP_INSTALL_DIR" == */sysup && -d "$SYSUP_INSTALL_DIR" ]]; then
-    info "Rimuovo la directory di installazione..."
+    info "Removing installation directory..."
     rm -rf "$SYSUP_INSTALL_DIR"
-    ok "Directory rimossa."
+    ok "Directory removed."
 else
-    warn "Directory non rimossa (percorso inatteso o già assente): $SYSUP_INSTALL_DIR"
+    warn "Directory not removed (unexpected path or already gone): $SYSUP_INSTALL_DIR"
 fi
 
 echo ""
 printf '%s\n' "${C_GREEN}======================================"
-printf '%s\n' "      DISINSTALLAZIONE COMPLETATA"
+printf '%s\n' "      UNINSTALLATION COMPLETED"
 printf '%s\n' "======================================${C_RESET}"
 echo ""
-info "Riapri il terminale (o 'source ~/.bashrc') per applicare il PATH."
+info "Reopen your terminal, or run 'source ~/.bashrc', to apply PATH changes."

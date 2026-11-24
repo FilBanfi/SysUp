@@ -7,7 +7,7 @@ RED="\033[31m"
 YELLOW="\033[33m"
 RESET="\033[0m"
 
-VERSION="1.0.0"
+CORE_FILE="0.4.0"
 MODULE_NAME="CORE"
 DEVELOPER="FilBanfi"
 
@@ -21,13 +21,11 @@ echo -e "${YELLOW}[$MODULE_NAME] Starting update...${RESET}"
 echo ""
 
 # ===== SETUP =====
-# Modulo autonomo: non usa lib/common.sh, si porta le sue funzioni.
-# I moduli stanno in modules/, quindi la root di sysup è un livello sopra.
 SYSUP_HOME="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 RAW="https://raw.githubusercontent.com/filbanfi/sysup/${SYSUP_REF:-main}"
 
-# File del core da sincronizzare. plugin.conf NON è in lista: è dell'utente.
-CORE_FILES="sysup.sh sysup-install.sh sysup-remove.sh sysup-uninstall.sh lib/common.sh plugin.conf.example"
+# plugin.conf is deliberately absent: it belongs to the user.
+CORE_FILES="sysup.sh sysup-install.sh sysup-remove.sh sysup-uninstall.sh sysup-help lib/common.sh plugin.conf.example"
 
 fetch() {
     if command -v curl >/dev/null 2>&1; then
@@ -39,7 +37,6 @@ fetch() {
     fi
 }
 
-# Sanity check: la prima riga deve iniziare per '#'. Intercetta HTML di errore.
 first_line_ok() {
     local first=""
     IFS= read -r first < "$1" || true
@@ -55,20 +52,19 @@ for rel in $CORE_FILES; do
 
     if fetch "$RAW/$rel" "$tmp" && first_line_ok "$tmp"; then
         mkdir -p "$(dirname "$dest")"
-        # mv e non cp: bash legge lo script da un fd già aperto, mv sostituisce
-        # il nome ma il vecchio inode resta vivo fino alla chiusura. Quindi
-        # aggiornare un file in esecuzione (anche sysup.sh) non lo corrompe.
+        # mv, not cp: bash reads a running script from an open fd, so replacing
+        # the directory entry keeps the old inode alive until it exits.
         mv "$tmp" "$dest"
         case "$rel" in *.sh) chmod +x "$dest" ;; esac
         n_ok=$((n_ok+1))
     else
         rm -f "$tmp"
-        echo -e "${RED}[$MODULE_NAME] non aggiornato: $rel${RESET}" >&2
+        echo -e "${RED}[$MODULE_NAME] not updated: $rel${RESET}" >&2
         n_fail=$((n_fail+1))
     fi
 done
 
-echo "[$MODULE_NAME] core: $n_ok aggiornati, $n_fail falliti"
+echo "[$MODULE_NAME] core: $n_ok updated, $n_fail failed"
 
 # ===== END =====
 
@@ -82,6 +78,5 @@ fi
 echo -e "${YELLOW}======================================${RESET}"
 echo ""
 
-# Un mirror momentaneamente giù non deve bloccare gli aggiornamenti di sistema:
-# usciamo comunque a 0, il riepilogo sopra dice già com'è andata.
+# A temporarily unreachable mirror must not block system updates.
 exit 0

@@ -2,24 +2,23 @@
 # SYSUP CONFIG FILE
 # config-version: 1
 # ===============================
-# La riga "config-version" qui sopra serve al core per capire se sa leggere
-# questo file. Non rimuoverla.
+# Keep the config-version line: the core uses it to check compatibility.
 #
-# REGOLE
-# 1. Un modulo per riga:  nome.sh=1   (1 = abilitato, 0 = disabilitato)
-# 2. L'ORDINE DELLE RIGHE È L'ORDINE DI ESECUZIONE. Decidi tu.
-# 3. Niente spazi nei nomi.
-# 4. I moduli si installano con:
+# RULES
+# 1. One module per line:  name.sh=1   (1 = enabled, 0 = disabled)
+# 2. LINE ORDER IS EXECUTION ORDER.
+# 3. No spaces in file names.
+# 4. Install modules with:
 #      sysup-install dnf
-#    che scarica il file E aggiunge la riga in fondo al conf.
+#    which downloads the file and appends the line here.
 # ===============================
 
-# --- MANUTENZIONE DI SYSUP ---
-# Tienili per primi: core aggiorna il programma, modules aggiorna i moduli.
+# --- SYSUP MAINTENANCE ---
+# Keep these first: core updates the program, modules updates the modules.
 core.sh=1
 modules.sh=1
 
-# --- ESEMPI (installali con sysup-install <nome>) ---
+# --- EXAMPLES (install with sysup-install <name>) ---
 # apt.sh=0
 # dnf.sh=0
 # pacman.sh=0
@@ -43,5 +42,5 @@ modules.sh=1
 # rustup.sh=0
 
 # ===============================
-# nano: CTRL+O, Invio, CTRL+X
+# nano: CTRL+O, Enter, CTRL+X
 # ===============================

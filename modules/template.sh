@@ -7,7 +7,7 @@ RED="\033[31m"
 YELLOW="\033[33m"
 RESET="\033[0m"
 
-VERSION="0.1.0"
+VERSION="0.4.0"
 MODULE_NAME="MODULE_NAME"
 DEVELOPER="FilBanfi"
 
@@ -34,17 +34,12 @@ echo -e "${GREEN}[$MODULE_NAME] Update completed${RESET}"
 echo -e "${YELLOW}======================================${RESET}"
 echo ""
 
-# =============================================================================
-# CONTRATTO DEL MODULO (leggilo prima di scrivere il tuo)
-# 1. Script bash autonomo: nessuna dipendenza dal core, nessun source di lib/.
-# 2. NON interattivo: usa -y / --noconfirm / --non-interactive.
-# 3. Exit 0 = successo, exit != 0 = fallimento. Il core stampa [OK]/[FAIL] e
-#    continua con il modulo successivo.
-# 4. Niente blocco EXIT_CODE=$?: con set -e, se un comando fallisce lo script
-#    esce subito e il messaggio "Update completed" non viene raggiunto.
-# 5. I privilegi si chiedono QUI (sudo/doas), mai nel core: flatpak, pipx, brew,
-#    yay e paru non vogliono girare come root.
-# 6. Niente spazi nel nome del file. Il nome del modulo = il comando che aggiorna.
-# 7. Se scrivi un modulo tuo, non chiamarlo come uno ufficiale: modules.sh al
-#    primo sync te lo sovrascriverebbe. Usa un nome tipo my-dnf.sh.
-# =============================================================================
+# MODULE CONTRACT
+# - Standalone bash script, no dependency on the core.
+# - Non-interactive: always pass -y / --noconfirm / --non-interactive.
+# - Exit 0 on success, non-zero on failure. The core prints [OK]/[FAIL].
+# - No EXIT_CODE=$? block: set -e already stops on the first failing command.
+# - Privileges are requested here (sudo/doas), never by the core: flatpak, pipx,
+#   brew, yay and paru misbehave or refuse to run as root.
+# - Custom modules must not reuse an official name, or modules.sh will overwrite
+#   them on the next sync.

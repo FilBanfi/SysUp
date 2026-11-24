@@ -7,7 +7,7 @@ RED="\033[31m"
 YELLOW="\033[33m"
 RESET="\033[0m"
 
-VERSION="1.0.0"
+VERSION="0.4.0"
 MODULE_NAME="MODULES"
 DEVELOPER="FilBanfi"
 
@@ -50,8 +50,7 @@ trim() {
 }
 
 # ===== COMMANDS =====
-# Aggiorna solo i moduli realmente presenti sul disco, abilitati o no:
-# è l'elenco dei "moduli installati", non dei "moduli disponibili".
+# Only modules present on disk, enabled or not: installed, not available.
 n_ok=0; n_fail=0
 
 while IFS='=' read -r raw_path raw_flag || [[ -n "$raw_path" ]]; do
@@ -63,17 +62,17 @@ while IFS='=' read -r raw_path raw_flag || [[ -n "$raw_path" ]]; do
 
     tmp="$(mktemp)"
     if fetch "$RAW/modules/$path" "$tmp" && first_line_ok "$tmp"; then
-        mv "$tmp" "$dest"        # atomico: sicuro anche su sé stesso
+        mv "$tmp" "$dest"
         chmod +x "$dest"
         n_ok=$((n_ok+1))
     else
         rm -f "$tmp"
-        echo -e "${RED}[$MODULE_NAME] non aggiornato: $path${RESET}" >&2
+        echo -e "${RED}[$MODULE_NAME] not updated: $path${RESET}" >&2
         n_fail=$((n_fail+1))
     fi
 done < "$CONF"
 
-echo "[$MODULE_NAME] moduli: $n_ok aggiornati, $n_fail falliti"
+echo "[$MODULE_NAME] modules: $n_ok updated, $n_fail failed"
 
 # ===== END =====
 
