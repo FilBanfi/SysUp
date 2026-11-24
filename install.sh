@@ -14,7 +14,7 @@ echo ""
 
 # ===== VERIFY SOURCES =====
 for required in sysup.sh sysup-install.sh sysup-remove.sh sysup-uninstall.sh \
-                lib/common.sh plugin.conf.example \
+                sysup-help.sh lib/common.sh plugin.conf.example \
                 modules/core.sh modules/modules.sh modules/template.sh; do
     if [[ ! -e "$SCRIPT_DIR/$required" ]]; then
         err "Incomplete source tree: missing '$required'."
@@ -111,6 +111,5 @@ printf '%s\n' "======================================${C_RESET}"
 echo ""
 echo "Commands: sysup | sysup-install | sysup-remove | sysup-uninstall | sysup-help"
 echo ""
-echo "Next: install the modules you need with 'sysup-install [module]'"
+echo "Run 'sysup-help' for the full documentation."
 echo ""
-echo "Then edit $SYSUP_INSTALL_DIR/plugin.conf to set the execution order."

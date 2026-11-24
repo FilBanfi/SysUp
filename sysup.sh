@@ -11,7 +11,7 @@ ASSUME_YES=0
 for arg in "$@"; do
     case "$arg" in
         -y|--yes)     ASSUME_YES=1 ;;
-        -h|--help)    printf 'Usage: sysup [-y|--yes]\n'; exit 0 ;;
+        -h|--help)    printf 'Usage: sysup [-y|--yes]\nSee sysup-help for full documentation.\n'; exit 0 ;;
         -v|--version) printf 'sysup %s\n' "$SYSUP_VERSION"; exit 0 ;;
         *) err "Unknown option: $arg"; exit 2 ;;
     esac

@@ -7,7 +7,7 @@ RED="\033[31m"
 YELLOW="\033[33m"
 RESET="\033[0m"
 
-CORE_FILE="0.4.0"
+VERSION="0.4.0"
 MODULE_NAME="CORE"
 DEVELOPER="FilBanfi"
 
@@ -25,7 +25,7 @@ SYSUP_HOME="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 RAW="https://raw.githubusercontent.com/filbanfi/sysup/${SYSUP_REF:-main}"
 
 # plugin.conf is deliberately absent: it belongs to the user.
-CORE_FILES="sysup.sh sysup-install.sh sysup-remove.sh sysup-uninstall.sh sysup-help lib/common.sh plugin.conf.example"
+CORE_FILES="sysup.sh sysup-install.sh sysup-remove.sh sysup-uninstall.sh sysup-help.sh lib/common.sh plugin.conf.example"
 
 fetch() {
     if command -v curl >/dev/null 2>&1; then

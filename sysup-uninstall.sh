@@ -23,7 +23,7 @@ fi
 
 # ===== COMMANDS =====
 info "Removing commands..."
-for cmd in sysup sysup-install sysup-remove sysup-uninstall; do
+for cmd in sysup sysup-install sysup-remove sysup-uninstall sysup-help; do
     rm -f "$SYSUP_BIN_DIR/$cmd"
 done
 ok "Commands removed."
