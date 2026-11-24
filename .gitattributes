@@ -1,0 +1,24 @@
+# =============================================================================
+# .gitattributes — sysup
+#
+# Se un .sh finisce con CRLF, la shebang diventa "#!/usr/bin/env bash\r" e il
+# kernel cerca un interprete chiamato "bash\r": "bad interpreter", anche se
+# bash è installato. Con eol=lf i file escono dal checkout sempre con LF.
+# =============================================================================
+
+# Default: git riconosce i file di testo e li normalizza a LF nel repo.
+# I binari non vengono toccati, perché text=auto li esclude da solo.
+* text=auto eol=lf
+
+# Script: la riga che conta davvero per questo progetto.
+*.sh text eol=lf
+
+# Configurazioni (plugin.conf, plugin.conf.example).
+*.conf text eol=lf
+*.example text eol=lf
+
+# Documentazione e file di servizio del repo.
+*.md text eol=lf
+LICENSE text eol=lf
+.gitattributes text eol=lf
+.gitignore text eol=lf

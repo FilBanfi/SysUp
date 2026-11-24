@@ -1,0 +1,47 @@
+# ===============================
+# SYSUP CONFIG FILE
+# config-version: 1
+# ===============================
+# La riga "config-version" qui sopra serve al core per capire se sa leggere
+# questo file. Non rimuoverla.
+#
+# REGOLE
+# 1. Un modulo per riga:  nome.sh=1   (1 = abilitato, 0 = disabilitato)
+# 2. L'ORDINE DELLE RIGHE È L'ORDINE DI ESECUZIONE. Decidi tu.
+# 3. Niente spazi nei nomi.
+# 4. I moduli si installano con:
+#      sysup-install dnf
+#    che scarica il file E aggiunge la riga in fondo al conf.
+# ===============================
+
+# --- MANUTENZIONE DI SYSUP ---
+# Tienili per primi: core aggiorna il programma, modules aggiorna i moduli.
+core.sh=1
+modules.sh=1
+
+# --- ESEMPI (installali con sysup-install <nome>) ---
+# apt.sh=0
+# dnf.sh=0
+# pacman.sh=0
+# yay.sh=0
+# paru.sh=0
+# zypper.sh=0
+# zypper-dup.sh=0
+# emerge.sh=0
+# nix.sh=0
+# nixos.sh=0
+# pkg.sh=0
+# pkg_add.sh=0
+# pkgin.sh=0
+# apk.sh=0
+# xbps.sh=0
+# brew.sh=0
+# flatpak.sh=0
+# snap.sh=0
+# pipx.sh=0
+# fisher.sh=0
+# rustup.sh=0
+
+# ===============================
+# nano: CTRL+O, Invio, CTRL+X
+# ===============================
