@@ -8,9 +8,7 @@
 # 1. One module per line:  name.sh=1   (1 = enabled, 0 = disabled)
 # 2. LINE ORDER IS EXECUTION ORDER.
 # 3. No spaces in file names.
-# 4. Install modules with:
-#      sysup-install dnf
-#    which downloads the file and appends the line here.
+# 4. Install modules with: sysup-install <name>
 # ===============================
 
 # --- SYSUP MAINTENANCE ---
@@ -18,29 +16,7 @@
 core.sh=1
 modules.sh=1
 
-# --- EXAMPLES (install with sysup-install <name>) ---
-# apt.sh=0
-# dnf.sh=0
-# pacman.sh=0
-# yay.sh=0
-# paru.sh=0
-# zypper.sh=0
-# zypper-dup.sh=0
-# emerge.sh=0
-# nix.sh=0
-# nixos.sh=0
-# pkg.sh=0
-# pkg_add.sh=0
-# pkgin.sh=0
-# apk.sh=0
-# xbps.sh=0
-# brew.sh=0
-# flatpak.sh=0
-# snap.sh=0
-# pipx.sh=0
-# fisher.sh=0
-# rustup.sh=0
-
 # ===============================
 # nano: CTRL+O, Enter, CTRL+X
+# vim:  :wq
 # ===============================
